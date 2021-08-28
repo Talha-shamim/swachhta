@@ -61,7 +61,15 @@ export const rateInc = async (req,res) => {
     const rate = await Rate.findOne({});
     rate.rateIn5 += req.body.rate;
     rate.person += 1;
-    await rate.save();
+    try{
+        await rate.save();
+        res.status(501).json(
+            success : true;
+        )
+    }
+    catch(err){
+         res.status(501).json({message : 'update failed'})
+    }
 }
 
 export const rateCount = async (req,res) => {
