@@ -63,9 +63,9 @@ export const rateInc = async (req,res) => {
     rate.person += 1;
     try{
         await rate.save();
-        res.status(501).json(
+        res.status(200).json({
             success : true;
-        )
+        })
     }
     catch(err){
          res.status(501).json({message : 'update failed'})
