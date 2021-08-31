@@ -64,7 +64,7 @@ export const rateInc = async (req,res) => {
     try{
         await rate.save();
         res.status(200).json({
-            success : true;
+            success : true,
         })
     }
     catch(err){
