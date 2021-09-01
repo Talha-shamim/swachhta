@@ -1,6 +1,7 @@
 import User from '../model/user.js';
 import Rate from '../model/rate.js';
 import nodemailer from 'nodemailer';
+import { json } from 'body-parser';
 
 
 export const login = async (req,res) => {
@@ -90,13 +91,53 @@ export const mail = async (req,res) => {
     // save image to images first also need the name of the image
 
     // get the nearest mc
-    let nearestMc;
+    let LATLONG = [
+        {
+            lat : 23,
+            long : 85,
+            email : 'Dummy1@gmail.com'
+        },
+        {
+            lat : 23,
+            long : 86,
+            email : 'Dummy2@gmail.com'
+        },
+        {
+            lat : 23,
+            long : 87,
+            email : 'Dummy3@gmail.com'
+        },
+        {
+            lat : 23,
+            long : 88,
+            email : 'Dummy4@gmail.com'
+        },
+    ];
+
+    let userLat = req.body.lat;
+    let userLong = req.body.long;
+    let nearestDist = 100000000;
+
+
+    console.log(req.body);
+
+    let nearestMc = LATLONG[0];
+    for(let i=0;i<LATLONG.length;i++){
+        let dist = getDistance(LATLONG[i].lat,LATLONG[i].long,userLat,userLong);
+        console.log(dist);
+        if(dist < nearestDist){
+            nearestDist = dist;
+            nearestMc = LATLONG[i];
+        }
+    }
+    
+    console.log(nearestMc)
     let cleanliness = "Garbage Dump removal";
-    let msg = "This is regarding the garbage dump, need to be cleaned. The location along with Picture is attached here. This is an auto mated mail from SWACHTTA App."
+    let msg = "This is regarding the garbage dump, need to be cleaned. The location along with Picture is attached here. This is an auto mated mail from SWACHTTA App."; 
 
     var mailOptions = {
         from : 'wethree0003@gmail.com',
-        to :  nearestMC,
+        to :  'nearestMc.email',
         subject : cleanliness,
         html : msg,
         attachments : [{
@@ -105,17 +146,17 @@ export const mail = async (req,res) => {
         }]
     }
     
-
-    transporter.sendMail(mailOptions, function (error,info){
-        if(error){
-            console.log(error);
-            res.status(400).json({"msg" : "failed msg"});
-        }
-        else{
-            console.log('mail sent : ' + info.response);
-            res.status(200).json({"msg" : "mail successful"});
-        }
-    })
+    // transporter.sendMail(mailOptions, function (error,info){
+    //     if(error){
+    //         console.log(error);
+    //         res.status(400).json({"msg" : "failed msg"});
+    //     }
+    //     else{
+    //         console.log('mail sent : ' + info.response);
+    //         res.status(200).json({"msg" : "mail successful"});
+    //     }
+    // })
+    res.status(200).json({message:'success'});
 }
 
 function getDistance(lat1, lon1, lat2, lon2){
