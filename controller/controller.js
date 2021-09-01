@@ -161,16 +161,16 @@ export const mail = async (req,res) => {
         }]
     }
     
-    // transporter.sendMail(mailOptions, function (error,info){
-    //     if(error){
-    //         console.log(error);
-    //         res.status(400).json({"msg" : "failed msg"});
-    //     }
-    //     else{
-    //         console.log('mail sent : ' + info.response);
-    //         res.status(200).json({"msg" : "mail successful"});
-    //     }
-    // })
+    transporter.sendMail(mailOptions, function (error,info){
+        if(error){
+            console.log(error);
+            res.status(400).json({"msg" : "failed msg"});
+        }
+        else{
+            console.log('mail sent : ' + info.response);
+            res.status(200).json({"msg" : "mail successful"});
+        }
+    })
     res.status(200).json({message:'success'});
 }
 
