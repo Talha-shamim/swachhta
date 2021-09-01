@@ -9,21 +9,29 @@ export const login = async (req,res) => {
         const users = await User.find({email : req.body.email})
         if(users.length == 0){
             console.log('login failed')
-            res.status(401).json({message : 'login failed'})
+            res.status(401).json({
+                success : false,
+            })
         }
         else{
             if(users[0].password === req.body.password ){
                 console.log('login successful')
-                res.status(200).json({message : users[0].name , email : users[0].email})
+                res.status(200).json({
+                    success : true,
+                })
             }
             else{
                 console.log('login failed')
-                res.status(401).json({message : 'login failed'})
+                    res.status(401).json({
+                    success : false,
+                })
             }
         }
     }
     catch(error){
-        res.status(501).json({message : 'login failed'})
+       res.status(401).json({
+           success : false,
+       })
     }
 }
 
@@ -32,15 +40,22 @@ export const signup = async (req,res) => {
     try{
         const users = await User.find({email : req.body.email})
         if(users.length > 0 || req.body.name.length < 3 || req.body.password.length < 6){
-            res.status(401).json({message : 'email already exist'})
+            res.status(401).json({
+                message : 'email already exist',
+                success : false,
+            })
         }
         else{
             const signedUpUser = await new User(req.body).save();
-            res.status(200).json({message : 'signup succesfully'})
+            res.status(200).json({
+                    success : true,
+                })
         }
     }
     catch(error){
-        res.status(501).json({message : 'signup failed'})
+        res.status(401).json({
+           success : false,
+       })
     }
 }
 
