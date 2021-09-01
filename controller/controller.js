@@ -1,7 +1,6 @@
 import User from '../model/user.js';
 import Rate from '../model/rate.js';
 import nodemailer from 'nodemailer';
-import { json } from 'body-parser';
 
 
 export const login = async (req,res) => {
