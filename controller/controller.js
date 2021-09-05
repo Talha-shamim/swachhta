@@ -36,6 +36,7 @@ export const login = async (req,res) => {
 
 export const signup = async (req,res) => {
     req.body.points = 0;
+    console.log(req.body);
     try{
         const users = await User.find({email : req.body.email})
         if(users.length > 0 || req.body.name.length < 3 || req.body.password.length < 6){
