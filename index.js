@@ -9,7 +9,7 @@ app.use(cors());
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 
-mongoose.connect("mongodb+srv://abc:user@123@cluster0.hpdua.mongodb.net/rating?retryWrites=true",  { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify : false, useCreateIndex: true })
+mongoose.connect("mongodb+srv://abc:user@123@cluster0.hpdua.mongodb.net/swachhta?retryWrites=true",  { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify : false, useCreateIndex: true })
 .then(()=>{
     console.log("database connected")
 })
